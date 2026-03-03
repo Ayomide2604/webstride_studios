@@ -10,6 +10,8 @@ import BootstrapClient from "./utils/BootstrapClient";
 // custom css
 import "../public/assets/fonts/css/boxicons.min.css";
 import "../public/assets/css/theme.min.css";
+
+// Layout components
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 
@@ -26,11 +28,24 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<body>
-				<Script src="/assets/js/theme.min.js" strategy="afterInteractive" />
 				<BootstrapClient />
 				<Header />
 				<main>{children}</main>
 				<Footer />
+
+				<Script
+					src="https://cdnjs.cloudflare.com/ajax/libs/headhesive/1.2.4/headhesive.min.js"
+					strategy="beforeInteractive" // or afterInteractive – beforeInteractive loads early
+					integrity="sha512-..." // optional: add if you want SRI (check cdnjs for latest hash)
+					crossOrigin="anonymous"
+				/>
+				<Script
+					src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+					integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+					crossOrigin="anonymous"
+					strategy="afterInteractive"
+				/>
+				<Script src="/assets/js/theme.min.js" strategy="afterInteractive" />
 			</body>
 		</html>
 	);

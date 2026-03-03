@@ -7,6 +7,7 @@ const Hero = () => {
 			className="jarallax py-9 hero-agency"
 			data-jarallax=""
 			data-speed="0.4"
+			style={{ minHeight: "100vh" }}
 		>
 			<Image
 				className="jarallax-img"
@@ -15,13 +16,14 @@ const Hero = () => {
 				fill
 				priority
 				unoptimized
+				style={{ objectFit: "cover" }}
 			/>
 			<div className="position-absolute start-0 end-0">
 				<div className="container">
 					<div className="row">
 						<div className="col-xl-5 col-lg-7 col-12" data-cue="zoomIn">
 							<div className="text-center text-lg-start">
-								<div className="mb-4 text-white-stable">
+								<div className="my-4 text-white-stable">
 									<small className="text-uppercase ls-lg">
 										Edmonton Web Developers
 									</small>
@@ -37,7 +39,7 @@ const Hero = () => {
 							   Option 3: "Web Design in Edmonton" – Beautiful sites that convert.
 							*/}
 								</div>
-								<a href="#" className="btn btn-primary">
+								<a href="#!" className="btn btn-primary">
 									Get Started
 								</a>
 							</div>

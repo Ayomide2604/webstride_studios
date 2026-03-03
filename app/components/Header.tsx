@@ -1,3 +1,4 @@
+'use client'
 import Image from "next/image";
 import logo from "../../public/assets/images/logo/logo.svg";
 const Header = () => {
@@ -9,7 +10,7 @@ const Header = () => {
 						<Image src={logo} alt="Logo" width={150} height={40} />
 					</a>
 					<button className="navbar-toggler offcanvas-nav-btn" type="button">
-						<i className="bi bi-list" />
+						<span className="navbar-toggler-icon"></span>
 					</button>
 					<div
 						className="offcanvas offcanvas-start offcanvas-nav"
