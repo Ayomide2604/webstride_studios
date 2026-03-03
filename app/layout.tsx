@@ -10,6 +10,8 @@ import BootstrapClient from "./utils/BootstrapClient";
 // custom css
 import "../public/assets/fonts/css/boxicons.min.css";
 import "../public/assets/css/theme.min.css";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 
 export const metadata: Metadata = {
 	title: "Create Next App",
@@ -24,9 +26,11 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<body>
-				<BootstrapClient />
 				<Script src="/assets/js/theme.min.js" strategy="afterInteractive" />
-				{children}
+				<BootstrapClient />
+				<Header />
+				<main>{children}</main>
+				<Footer />
 			</body>
 		</html>
 	);
