@@ -1,0 +1,8 @@
+/* Scroll logo change */
+.navbar-clone .main-logo {
+	display: none !important;
+}
+
+.navbar-clone .scroll-logo {
+	display: block !important;
+}

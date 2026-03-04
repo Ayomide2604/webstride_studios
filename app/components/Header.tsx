@@ -1,13 +1,29 @@
-'use client'
+"use client";
 import Image from "next/image";
-import logo from "../../public/assets/images/logo/logo.svg";
+import logoDark from "../../public/assets/images/logo/logo-dark.svg";
+import logo from "../../public/assets/images/logo/logo-black.svg";
+
 const Header = () => {
 	return (
 		<header>
 			<nav className="navbar navbar-expand-lg transparent navbar-transparent navbar-dark">
 				<div className="container px-3">
 					<a className="navbar-brand" href="index.html">
-						<Image src={logo} alt="Logo" width={150} height={40} />
+						<Image
+							src={logoDark}
+							alt="Logo"
+							width={200}
+							height={50}
+							className="main-logo"
+						/>
+						<Image
+							src={logo}
+							alt="Logo"
+							width={170}
+							height={50}
+							className="scroll-logo"
+							style={{ display: "none" }}
+						/>
 					</a>
 					<button className="navbar-toggler offcanvas-nav-btn" type="button">
 						<span className="navbar-toggler-icon"></span>
