@@ -28,7 +28,7 @@ const page = () => {
 								<div className="col-md-7 col-12">
 									<div className="card shadow-sm">
 										<div className="card-body">
-											<form className="row g-3 needs-validation" noValidate="">
+											<form className="row g-3 needs-validation" noValidate>
 												<div className="col-lg-6 col-md-12">
 													<label
 														htmlFor="contactFirstNameInput"
@@ -41,7 +41,7 @@ const page = () => {
 														type="text"
 														className="form-control"
 														id="contactFirstNameInput"
-														required=""
+														required
 													/>
 													<div className="invalid-feedback">
 														Please enter firstname.
@@ -59,7 +59,7 @@ const page = () => {
 														type="text"
 														className="form-control"
 														id="contactLastNameInput"
-														required=""
+														required
 													/>
 													<div className="invalid-feedback">
 														Please enter lastname.
@@ -77,7 +77,7 @@ const page = () => {
 														type="email"
 														className="form-control"
 														id="contactEmailInput"
-														required=""
+														required
 													/>
 													<div className="invalid-feedback">
 														Please enter email.
@@ -94,7 +94,7 @@ const page = () => {
 														type="text"
 														className="form-control"
 														id="contactCompanyNameInput"
-														required=""
+														required
 													/>
 													<div className="invalid-feedback">
 														Please enter company name.
@@ -111,7 +111,7 @@ const page = () => {
 														type="tel"
 														className="form-control"
 														id="contactPhoneInput"
-														required=""
+														required
 													/>
 													<div className="invalid-feedback">
 														Please enter phone.
@@ -129,7 +129,7 @@ const page = () => {
 														id="contactTextarea"
 														placeholder="Write to us"
 														rows={4}
-														required=""
+														required
 														defaultValue={""}
 													/>
 													<div className="invalid-feedback">
