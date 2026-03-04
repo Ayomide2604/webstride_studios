@@ -25,7 +25,7 @@ const Hero = () => {
 							<div className="text-center text-lg-start">
 								<div className="my-4 text-white-stable">
 									<small className="text-uppercase ls-lg">
-										Edmonton Web Developers
+										Edmonton Web Developer
 									</small>
 									<h1 className="mb-1 mt-3 display-3 text-white-stable">
 										Web Design in Edmonton
