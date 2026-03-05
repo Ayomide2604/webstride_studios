@@ -1,3 +1,4 @@
+import About from "./sections/About";
 import Appointment from "./sections/Appointment";
 import Hero from "./sections/Hero";
 import Services from "./sections/Services";
@@ -8,6 +9,7 @@ export default function Home() {
 		<div>
 			<Hero />
 			<Services />
+			<About />
 			<TechStack />
 			<Appointment />
 		</div>
