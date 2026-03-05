@@ -22,6 +22,7 @@ import "bootstrap-icons/font/bootstrap-icons.min.css";
 import HeaderWrapper from "./components/HeaderWrapper";
 import Footer from "./components/Footer";
 import ThemeToggleScript from "./components/ThemeToggleScript";
+import ScrollToTop from "./components/ScrollToTop";
 
 export const metadata: Metadata = {
 	title: "Create Next App",
@@ -38,9 +39,12 @@ export default function RootLayout({
 			<body>
 				<ThemeToggleScript />
 				<BootstrapClient />
-				<HeaderWrapper />
-				<main>{children}</main>
-				<Footer />
+				<div className="content-wrapper">
+					<HeaderWrapper />
+					<main>{children}</main>
+					<Footer />
+				</div>
+				<ScrollToTop />
 
 				<Script
 					src="https://cdnjs.cloudflare.com/ajax/libs/headhesive/1.2.4/headhesive.min.js"
