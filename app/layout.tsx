@@ -19,7 +19,7 @@ import "bootstrap-icons/font/bootstrap-icons.min.css";
 import "bootstrap-icons/font/bootstrap-icons.min.css";
 
 // Layout components
-import Header from "./components/Header";
+import HeaderWrapper from "./components/HeaderWrapper";
 import Footer from "./components/Footer";
 import ThemeToggleScript from "./components/ThemeToggleScript";
 
@@ -38,7 +38,7 @@ export default function RootLayout({
 			<body>
 				<ThemeToggleScript />
 				<BootstrapClient />
-				<Header />
+				<HeaderWrapper />
 				<main>{children}</main>
 				<Footer />
 
