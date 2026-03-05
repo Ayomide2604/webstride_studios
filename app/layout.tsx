@@ -18,6 +18,7 @@ import "bootstrap-icons/font/bootstrap-icons.min.css";
 // Layout components
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import ThemeToggleScript from "./components/ThemeToggleScript";
 
 export const metadata: Metadata = {
 	title: "Create Next App",
@@ -32,6 +33,7 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<body>
+				<ThemeToggleScript />
 				<BootstrapClient />
 				<Header />
 				<main>{children}</main>

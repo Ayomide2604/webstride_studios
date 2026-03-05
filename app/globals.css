@@ -6,3 +6,12 @@
 .navbar-clone .scroll-logo {
 	display: block !important;
 }
+
+/* Theme toggle - hide on main header, show only on sticky header */
+.navbar:not(.navbar-clone) .dropdown {
+	display: none !important;
+}
+
+.navbar-clone .dropdown {
+	display: block !important;
+}
