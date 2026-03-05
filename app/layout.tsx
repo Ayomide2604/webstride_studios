@@ -15,6 +15,9 @@ import "../public/assets/css/theme.min.css";
 // Bootstrap Icons CDN
 import "bootstrap-icons/font/bootstrap-icons.min.css";
 
+// Bootstrap Icons CDN
+import "bootstrap-icons/font/bootstrap-icons.min.css";
+
 // Layout components
 import Header from "./components/Header";
 import Footer from "./components/Footer";
