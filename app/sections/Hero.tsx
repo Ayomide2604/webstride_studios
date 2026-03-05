@@ -8,7 +8,7 @@ const Hero = () => {
 			data-jarallax=""
 			data-speed="0.4"
 			style={{ minHeight: "100vh" }}
-		>
+		>	
 			<Image
 				className="jarallax-img"
 				src="/assets/images/hero.jpg"
@@ -25,14 +25,14 @@ const Hero = () => {
 							<div className="text-center text-lg-start">
 								<div className="my-4 text-white-stable">
 									<small className="text-uppercase ls-lg">
-										Edmonton Web Developer
+										Edmonton Digital Agency
 									</small>
 									<h1 className="mb-1 mt-3 display-3 text-white-stable">
-										Web Design in Edmonton
+										Digital Solutions That Grow Your Business
 									</h1>
 									<p className="lead mb-0">
-										Local to Edmonton, we specialise in designing and building
-										custom websites that grow businesses online.
+										Based in Edmonton, serving businesses nationwide with custom
+										websites that convert.
 									</p>
 									{/* Alternate Hero Copies:
 							   Option 2: "Edmonton Digital Agency" – Your website, built right.
