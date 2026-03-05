@@ -2,6 +2,7 @@
 import Image from "next/image";
 import logoDark from "../../public/assets/images/logo/logo-dark.svg";
 import logo from "../../public/assets/images/logo/logo-black.svg";
+import ThemeToggle from "./ThemeToggle";
 
 const Header = () => {
 	return (
@@ -78,6 +79,9 @@ const Header = () => {
 								<a href="/quote" className="btn btn-primary">
 									Get a Quote
 								</a>
+								<div className="ms-3 d-flex align-items-center justify-content-lg-end">
+									<ThemeToggle />
+								</div>
 							</div>
 						</div>
 					</div>

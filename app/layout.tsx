@@ -5,11 +5,15 @@ import Script from "next/script";
 import "./globals.css";
 // import bootstrap css
 import "bootstrap/dist/css/bootstrap.min.css";
+
 import BootstrapClient from "./utils/BootstrapClient";
 
 // custom css
 import "../public/assets/fonts/css/boxicons.min.css";
 import "../public/assets/css/theme.min.css";
+
+// Bootstrap Icons CDN
+import "bootstrap-icons/font/bootstrap-icons.min.css";
 
 // Layout components
 import Header from "./components/Header";
