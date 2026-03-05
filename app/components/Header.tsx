@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import Link from "next/link";
 import logoDark from "../../public/assets/images/logo/logo-dark.svg";
 import logo from "../../public/assets/images/logo/logo-black.svg";
 import ThemeToggle from "./ThemeToggle";
@@ -9,7 +10,7 @@ const Header = () => {
 		<header>
 			<nav className="navbar navbar-expand-lg transparent navbar-transparent navbar-dark">
 				<div className="container px-3">
-					<a className="navbar-brand" href="index.html">
+					<Link className="navbar-brand" href="/">
 						<Image
 							src={logoDark}
 							alt="Logo"
@@ -25,7 +26,7 @@ const Header = () => {
 							className="scroll-logo"
 							style={{ display: "none" }}
 						/>
-					</a>
+					</Link>
 					<button className="navbar-toggler offcanvas-nav-btn" type="button">
 						<span className="navbar-toggler-icon"></span>
 					</button>
@@ -34,9 +35,9 @@ const Header = () => {
 						style={{ width: "20rem" }}
 					>
 						<div className="offcanvas-header">
-							<a href="index.html" className="text-inverse">
+							<Link href="/" className="text-inverse">
 								<Image src={logo} alt="Logo" width={150} height={40} />
-							</a>
+							</Link>
 							<button
 								type="button"
 								className="btn-close"
@@ -47,38 +48,38 @@ const Header = () => {
 						<div className="offcanvas-body pt-0 align-items-center">
 							<ul className="navbar-nav mx-auto align-items-lg-center">
 								<li className="nav-item">
-									<a className="nav-link" href="/">
+									<Link className="nav-link" href="/">
 										Home
-									</a>
+									</Link>
 								</li>
 								<li className="nav-item">
-									<a className="nav-link" href="/about">
+									<Link className="nav-link" href="/about">
 										About
-									</a>
+									</Link>
 								</li>
 								<li className="nav-item">
-									<a className="nav-link" href="/services">
+									<Link className="nav-link" href="/services">
 										Services
-									</a>
+									</Link>
 								</li>
 								<li className="nav-item">
-									<a className="nav-link" href="/projects">
+									<Link className="nav-link" href="/projects">
 										Projects
-									</a>
+									</Link>
 								</li>
 								<li className="nav-item">
-									<a className="nav-link" href="/contact">
+									<Link className="nav-link" href="/contact">
 										Contact
-									</a>
+									</Link>
 								</li>
 							</ul>
 							<div className="mt-3 mt-lg-0 d-flex align-items-center">
-								<a href="/contact" className="btn btn-light mx-2">
+								<Link href="/contact" className="btn btn-light mx-2">
 									Contact Us
-								</a>
-								<a href="/quote" className="btn btn-primary">
+								</Link>
+								<Link href="/quote" className="btn btn-primary">
 									Get a Quote
-								</a>
+								</Link>
 								<div className="ms-3 d-flex align-items-center justify-content-lg-end">
 									<ThemeToggle />
 								</div>
