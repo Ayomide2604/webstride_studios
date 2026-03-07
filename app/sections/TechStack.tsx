@@ -40,8 +40,8 @@ const TechStack = () => {
 										<Image
 											src={tech.image}
 											alt={tech.name}
-											width={80}
-											height={80}
+											width={60}
+											height={60}
 											className="img-fluid"
 											style={{ objectFit: "contain" }}
 										/>
