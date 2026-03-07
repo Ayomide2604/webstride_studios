@@ -1,5 +1,7 @@
+import Newsletter from "../components/Newsletter";
 import AboutHero from "./AboutHero";
 import ImageGallery from "./ImageGallery";
+import OurProcess from "./OurProcess";
 import OurValues from "./OurValues";
 
 const page = () => {
@@ -9,6 +11,8 @@ const page = () => {
 			<AboutHero />
 			<ImageGallery />
 			<OurValues />
+			<OurProcess />
+			<Newsletter />
 		</>
 	);
 };

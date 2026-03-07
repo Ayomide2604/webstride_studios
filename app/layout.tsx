@@ -48,8 +48,8 @@ export default function RootLayout({
 
 				<Script
 					src="https://cdnjs.cloudflare.com/ajax/libs/headhesive/1.2.4/headhesive.min.js"
-					strategy="beforeInteractive" // or afterInteractive – beforeInteractive loads early
-					integrity="sha512-..." // optional: add if you want SRI (check cdnjs for latest hash)
+					strategy="beforeInteractive" 
+					integrity="sha512-..." 
 					crossOrigin="anonymous"
 				/>
 				<Script
