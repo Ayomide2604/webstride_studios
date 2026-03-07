@@ -8,7 +8,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
-import { testimonials } from "./data/testimonials";
+import { testimonials } from "../data/testimonials";
 
 export default function Testimonials() {
 	return (

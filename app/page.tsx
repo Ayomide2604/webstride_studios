@@ -1,4 +1,4 @@
-import Testimonials from "./Testimonials";
+import Testimonials from "./sections/Testimonials";
 import About from "./sections/About";
 import Appointment from "./sections/Appointment";
 import Hero from "./sections/Hero";
