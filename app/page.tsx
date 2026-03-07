@@ -1,3 +1,4 @@
+import Testimonials from "./Testimonials";
 import About from "./sections/About";
 import Appointment from "./sections/Appointment";
 import Hero from "./sections/Hero";
@@ -11,6 +12,7 @@ export default function Home() {
 			<Services />
 			<About />
 			<TechStack />
+			<Testimonials />
 			<Appointment />
 		</div>
 	);
