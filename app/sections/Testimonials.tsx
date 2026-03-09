@@ -1,4 +1,3 @@
-// components/Testimonials.jsx
 "use client";
 
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -9,8 +8,12 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 
 import { testimonials } from "../data/testimonials";
+import TestimonialCard from "../components/TestimonialCard";
 
 export default function Testimonials() {
+	// Show only first 5 testimonials
+	const displayedTestimonials = testimonials.slice(0, 5);
+
 	return (
 		<section className="py-5 py-xl-9 bg-gray-100">
 			<div className="container">
@@ -41,39 +44,19 @@ export default function Testimonials() {
 							delay: 6000,
 							disableOnInteraction: false,
 						}}
-						loop={true}
+						loop={false}
 						className="pb-5 pb-md-6"
 					>
-						{testimonials.map((item) => (
+						{displayedTestimonials.map((item) => (
 							<SwiperSlide key={item.id}>
-								{/* Added p-3 or p-4 here restores internal spacing around each card */}
-								<div className="h-100 px-2 px-md-3 pb-3 pb-md-4">
-									<div className="card shadow-sm border-0 rounded-4 h-100 overflow-hidden">
-										<div className="card-body p-4 p-lg-5">
-											{" "}
-											{/* bigger internal padding */}
-											<p className="mb-5 lead text-muted fst-italic">
-												"{item.quote}"
-											</p>
-											<div className="mt-auto d-flex align-items-center">
-												<img
-													src={item.avatar}
-													alt={item.name}
-													className="avatar avatar-lg rounded-circle me-3"
-													width="70"
-													height="70"
-												/>
-												<div>
-													<h6 className="mb-1 fw-bold">{item.name}</h6>
-													<span className="small text-body-tertiary">
-														{item.role}
-														{item.company && ` • ${item.company}`}
-													</span>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
+								<TestimonialCard
+									id={item.id}
+									quote={item.quote}
+									name={item.name}
+									role={item.role}
+									company={item.company}
+									avatar={item.avatar}
+								/>
 							</SwiperSlide>
 						))}
 					</Swiper>
@@ -81,6 +64,16 @@ export default function Testimonials() {
 					{/* External pagination – always below */}
 					<div className="custom-swiper-pagination mt-4 mt-md-5 text-center"></div>
 				</div>
+
+				{/* See More Testimonials Button */}
+				{testimonials.length > 5 && (
+					<div className="text-center mt-5">
+						<a href="#" className="btn btn-outline-primary">
+							<i className="bi bi-arrow-right me-2"></i>
+							See More Testimonials
+						</a>
+					</div>
+				)}
 			</div>
 		</section>
 	);
