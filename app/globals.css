@@ -6,3 +6,8 @@
 .navbar-clone .scroll-logo {
 	display: block !important;
 }
+
+/* Hide original header when clone is active to prevent clashing */
+.navbar-clone ~ .navbar:not(.navbar-clone) {
+	display: none !important;
+}
