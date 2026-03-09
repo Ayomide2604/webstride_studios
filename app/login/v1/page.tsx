@@ -22,7 +22,7 @@ export default function LoginPage() {
 				data: { user },
 			} = await supabase.auth.getUser();
 			if (user) {
-				router.push("/dashboard");
+				router.push("/admin/dashboard");
 			}
 		};
 		checkUser();
@@ -34,7 +34,7 @@ export default function LoginPage() {
 		setError("");
 		setMessage("");
 
-		const result = await handleSignIn(email, password, "/dashboard");
+		const result = await handleSignIn(email, password, "/admin/dashboard");
 
 		if (!result.success) {
 			setError(result.error);

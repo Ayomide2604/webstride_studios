@@ -27,7 +27,7 @@ export const handleLogout = async (redirectUrl: string = "/") => {
 export const handleSignIn = async (
 	email: string,
 	password: string,
-	redirectUrl: string = "/dashboard",
+	redirectUrl: string = "/admin/dashboard",
 ) => {
 	try {
 		const supabase = createClient();

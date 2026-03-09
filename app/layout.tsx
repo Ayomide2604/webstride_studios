@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Script from "next/script";
-import { cookies } from "next/headers";
 import { createClient } from "@/lib/supabase/server";
 
 // import global css file
@@ -37,8 +36,7 @@ export default async function RootLayout({
 	children: React.ReactNode;
 }>) {
 	// Get authentication state on server side
-	const cookieStore = await cookies();
-	const supabase = await createClient(cookieStore);
+	const supabase = await createClient();
 
 	const {
 		data: { user },

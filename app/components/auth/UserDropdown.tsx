@@ -35,7 +35,7 @@ export default function UserDropdown({ user }: UserDropdownProps) {
 
 			<ul className="dropdown-menu dropdown-menu-end">
 				<li>
-					<Link className="dropdown-item" href="/dashboard">
+					<Link className="dropdown-item" href="/admin/dashboard">
 						<i className="bi bi-speedometer2 me-2"></i>
 						Dashboard
 					</Link>
