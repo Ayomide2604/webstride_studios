@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 
@@ -7,12 +8,49 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
-import { testimonials } from "../data/testimonials";
+import { getApprovedTestimonials } from "@/lib/testimonials";
 import TestimonialCard from "../components/TestimonialCard";
 
 export default function Testimonials() {
+	const [testimonials, setTestimonials] = useState<any[]>([]);
+	const [loading, setLoading] = useState(true);
+
+	useEffect(() => {
+		const fetchTestimonials = async () => {
+			try {
+				const data = await getApprovedTestimonials();
+				setTestimonials(data);
+			} catch (error) {
+				console.error("Error fetching testimonials:", error);
+			} finally {
+				setLoading(false);
+			}
+		};
+
+		fetchTestimonials();
+	}, []);
+
 	// Show only first 5 testimonials
 	const displayedTestimonials = testimonials.slice(0, 5);
+
+	if (loading) {
+		return (
+			<section className="py-5 py-xl-9 bg-gray-100">
+				<div className="container">
+					<div className="text-center">
+						<div className="spinner-border" role="status">
+							<span className="visually-hidden">Loading...</span>
+						</div>
+					</div>
+				</div>
+			</section>
+		);
+	}
+
+	// Don't show section if no testimonials
+	if (testimonials.length === 0) {
+		return null;
+	}
 
 	return (
 		<section className="py-5 py-xl-9 bg-gray-100">
@@ -74,6 +112,14 @@ export default function Testimonials() {
 						</a>
 					</div>
 				)}
+
+				{/* Submit Testimonial Button */}
+				<div className="text-center mt-3">
+					<a href="/testimonials/submit" className="btn btn-primary">
+						<i className="bi bi-plus-circle me-2"></i>
+						Share Your Experience
+					</a>
+				</div>
 			</div>
 		</section>
 	);
