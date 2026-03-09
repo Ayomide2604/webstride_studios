@@ -191,7 +191,7 @@ export async function submitTestimonial(
 		try {
 			await sendNotificationEmail(data);
 			console.log("✅ Notification email sent successfully!");
-		} catch (emailError) {
+		} catch (emailError: any) {
 			console.error("❌ Failed to send notification email:", emailError);
 			console.error("❌ Email error details:", emailError.message);
 			// Don't fail the submission if email fails
