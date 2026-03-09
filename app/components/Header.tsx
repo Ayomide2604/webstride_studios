@@ -5,9 +5,14 @@ import logoDark from "../../public/assets/images/logo/logo.svg";
 import logo from "../../public/assets/images/logo/logo.svg";
 import ThemeToggle from "./ThemeToggle";
 import QuoteModal from "./QuoteModal";
+import UserDropdown from "./auth/UserDropdown";
 import { useState } from "react";
 
-const Header = () => {
+interface HeaderProps {
+	user?: any;
+}
+
+const Header = ({ user }: HeaderProps) => {
 	const [isQuoteModalOpen, setIsQuoteModalOpen] = useState(false);
 
 	return (
@@ -88,10 +93,13 @@ const Header = () => {
 									>
 										Get a Quote
 									</button>
-									<div className="ms-3 d-flex align-items-center justify-content-lg-end">
-										<ThemeToggle />
-									</div>
 								</div>
+							</div>
+						</div>
+						<div className="ms-3 d-flex align-items-center justify-content-lg-end">
+							<ThemeToggle />
+							<div className="ms-2">
+								<UserDropdown user={user} />
 							</div>
 						</div>
 					</div>

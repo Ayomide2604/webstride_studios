@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import Script from "next/script";
+import { cookies } from "next/headers";
+import { createClient } from "@/lib/supabase/server";
 
 // import global css file
 import "./globals.css";
@@ -11,9 +13,6 @@ import BootstrapClient from "./utils/BootstrapClient";
 // custom css
 import "../public/assets/fonts/css/boxicons.min.css";
 import "../public/assets/css/theme.min.css";
-
-// Bootstrap Icons CDN
-import "bootstrap-icons/font/bootstrap-icons.min.css";
 
 // Bootstrap Icons CDN
 import "bootstrap-icons/font/bootstrap-icons.min.css";
@@ -32,18 +31,26 @@ export const metadata: Metadata = {
 	},
 };
 
-export default function RootLayout({
+export default async function RootLayout({
 	children,
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
+	// Get authentication state on server side
+	const cookieStore = await cookies();
+	const supabase = await createClient(cookieStore);
+
+	const {
+		data: { user },
+	} = await supabase.auth.getUser();
+
 	return (
 		<html lang="en">
 			<body>
 				<ThemeToggleScript />
 				<BootstrapClient />
 				<div className="content-wrapper">
-					<HeaderWrapper />
+					<HeaderWrapper user={user} />
 					<main>{children}</main>
 					<Footer />
 				</div>
@@ -51,7 +58,6 @@ export default function RootLayout({
 
 				<Script
 					src="https://cdnjs.cloudflare.com/ajax/libs/headhesive/1.2.4/headhesive.min.js"
-					strategy="beforeInteractive"
 					integrity="sha512-..."
 					crossOrigin="anonymous"
 				/>
@@ -59,7 +65,6 @@ export default function RootLayout({
 					src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
 					integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
 					crossOrigin="anonymous"
-					strategy="afterInteractive"
 				/>
 				<Script src="/assets/js/theme.min.js" strategy="afterInteractive" />
 			</body>
