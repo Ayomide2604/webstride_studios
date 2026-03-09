@@ -9,24 +9,19 @@ interface UserDropdownProps {
 }
 
 export default function UserDropdown({ user }: UserDropdownProps) {
-	console.log("UserDropdown: Received user prop:", user);
-
 	// Re-render when user prop changes
 	useEffect(() => {
-		console.log("UserDropdown: User prop changed:", user);
+		// User prop changed
 	}, [user]);
 
 	const handleSignOut = async () => {
-		console.log("UserDropdown: Logout button clicked");
 		await handleLogout("/");
 	};
 
 	if (!user) {
-		console.log("UserDropdown: No user, returning null");
 		return null;
 	}
 
-	console.log("UserDropdown: Rendering dropdown for admin");
 	return (
 		<div className="dropdown">
 			<button
