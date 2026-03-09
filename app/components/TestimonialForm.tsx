@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { submitTestimonial } from "@/app/actions/testimonials";
 import { TestimonialFormData } from "@/types/testimonial";
 
 interface TestimonialFormProps {
@@ -76,9 +75,29 @@ export default function TestimonialForm({
 		setSuccess("");
 
 		try {
-			const result = await submitTestimonial(formData);
+			console.log("🚀 Form submission starting...");
+
+			// Create FormData for API call
+			const apiFormData = new FormData();
+			apiFormData.append("name", formData.name);
+			apiFormData.append("role", formData.role);
+			apiFormData.append("company", formData.company);
+			apiFormData.append("quote", formData.quote);
+			apiFormData.append("email", formData.email);
+			if (formData.avatar) {
+				apiFormData.append("avatar", formData.avatar);
+			}
+
+			const response = await fetch("/api/submit-testimonial", {
+				method: "POST",
+				body: apiFormData,
+			});
+
+			const result = await response.json();
+			console.log("🚀 API response:", result);
 
 			if (!result.success) {
+				console.error("❌ API failed:", result.error);
 				setError(
 					result.error || "Failed to submit testimonial. Please try again.",
 				);
@@ -103,6 +122,9 @@ export default function TestimonialForm({
 				onSuccess();
 			}
 		} catch (error: any) {
+			console.error("❌ Form submission error:", error);
+			console.error("❌ Error details:", error.message);
+			console.error("❌ Error stack:", error.stack);
 			setError(
 				error.message || "Failed to submit testimonial. Please try again.",
 			);
