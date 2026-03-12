@@ -1,11 +1,43 @@
 const ThemeToggle = () => {
+	const handleClick = (e: React.MouseEvent) => {
+		console.log("Theme toggle clicked");
+		console.log("Event target:", e.target);
+		console.log(
+			"Bootstrap loaded:",
+			typeof window !== "undefined" && (window as any).bootstrap,
+		);
+
+		// Try to manually trigger Bootstrap dropdown
+		const button = e.currentTarget as HTMLElement;
+		const dropdown = button.nextElementSibling as HTMLElement;
+
+		if (
+			dropdown &&
+			typeof window !== "undefined" &&
+			(window as any).bootstrap
+		) {
+			console.log("Attempting manual Bootstrap dropdown");
+			try {
+				const bsDropdown = new (window as any).bootstrap.Dropdown(button);
+				bsDropdown.toggle();
+				console.log("Bootstrap dropdown toggle called");
+			} catch (error) {
+				console.error("Bootstrap dropdown error:", error);
+			}
+		}
+	};
+
 	return (
-		<div className="dropdown">
+		<div className="dropdown dropup">
 			<button
 				className="btn btn-light btn-icon rounded-circle d-flex align-items-center"
 				type="button"
 				aria-expanded="false"
 				data-bs-toggle="dropdown"
+				data-bs-auto-close="outside"
+				data-bs-boundary="viewport"
+				data-theme-js-ignore="true"
+				onClick={handleClick}
 				aria-label="Toggle theme (auto)"
 			>
 				<i className="bi theme-icon-active lh-1">
@@ -13,7 +45,14 @@ const ThemeToggle = () => {
 				</i>
 				<span className="visually-hidden bs-theme-text">Toggle theme</span>
 			</button>
-			<ul className="dropdown-menu dropdown-menu-end shadow" aria-labelledby="bs-theme-text">
+			<ul
+				className="dropdown-menu dropdown-menu-end shadow"
+				style={{
+					zIndex: 1055,
+					position: "absolute",
+				}}
+				aria-labelledby="bs-theme-text"
+			>
 				<li>
 					<button
 						type="button"

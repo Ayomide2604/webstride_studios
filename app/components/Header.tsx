@@ -42,6 +42,7 @@ const Header = ({ user }: HeaderProps) => {
 							data-bs-toggle="offcanvas"
 							data-bs-target="#offcanvasHeader"
 							aria-controls="offcanvasHeader"
+							data-theme-js-ignore="true"
 						>
 							<span className="navbar-toggler-icon"></span>
 						</button>

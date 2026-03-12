@@ -27,6 +27,7 @@ const PageHeader = ({ user }: PageHeaderProps) => {
 							data-bs-toggle="offcanvas"
 							data-bs-target="#offcanvasPageHeader"
 							aria-controls="offcanvasPageHeader"
+							data-theme-js-ignore="true"
 						>
 							<i className="bi bi-list"></i>
 						</button>

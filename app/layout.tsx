@@ -20,6 +20,7 @@ import "bootstrap-icons/font/bootstrap-icons.min.css";
 import HeaderWrapper from "./components/HeaderWrapper";
 import Footer from "./components/Footer";
 import ThemeToggleScript from "./components/ThemeToggleScript";
+import OffcanvasFix from "./components/OffcanvasFix";
 import ScrollToTop from "./components/ScrollToTop";
 
 export const metadata: Metadata = {
@@ -46,6 +47,7 @@ export default async function RootLayout({
 		<html lang="en">
 			<body>
 				<ThemeToggleScript />
+				<OffcanvasFix />
 				<BootstrapClient />
 				<div className="content-wrapper">
 					<HeaderWrapper user={user} />
@@ -56,7 +58,6 @@ export default async function RootLayout({
 
 				<Script
 					src="https://cdnjs.cloudflare.com/ajax/libs/headhesive/1.2.4/headhesive.min.js"
-					integrity="sha512-..."
 					crossOrigin="anonymous"
 				/>
 				<Script
