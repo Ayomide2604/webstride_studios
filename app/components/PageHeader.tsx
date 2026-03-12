@@ -63,6 +63,7 @@ const PageHeader = ({ user }: PageHeaderProps) => {
 										</Link>
 									</li>
 								</ul>
+
 								<div className="mt-3 mt-lg-0 d-flex align-items-center">
 									<Link href="/contact" className="btn btn-light mx-2">
 										Contact Us
@@ -73,6 +74,14 @@ const PageHeader = ({ user }: PageHeaderProps) => {
 									>
 										Get a Quote
 									</button>
+								</div>
+
+								{/* Mobile-only theme and user controls */}
+								<div className="d-lg-none mt-4">
+									<div className="d-flex align-items-center justify-content-between">
+										<ThemeToggle />
+										{user && <UserDropdown user={user} />}
+									</div>
 								</div>
 							</div>
 						</div>
