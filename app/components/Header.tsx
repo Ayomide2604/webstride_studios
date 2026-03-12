@@ -77,11 +77,6 @@ const Header = ({ user }: HeaderProps) => {
 											Projects
 										</Link>
 									</li>
-									<li className="nav-item">
-										<Link className="nav-link" href="/contact">
-											Contact
-										</Link>
-									</li>
 								</ul>
 								<div className="mt-3 mt-lg-0 d-flex align-items-center">
 									<Link href="/contact" className="btn btn-light mx-2">

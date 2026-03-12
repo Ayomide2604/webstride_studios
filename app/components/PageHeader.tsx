@@ -31,7 +31,7 @@ const PageHeader = ({ user }: PageHeaderProps) => {
 						>
 							<div className="offcanvas-header">
 								<Link href="/" className="text-inverse">
-									<Image src={logo} alt="Logo" width={150} height={40} />
+									<Image src={logo} alt="Logo" width={200} height={90} />
 								</Link>
 								<button
 									type="button"
@@ -60,11 +60,6 @@ const PageHeader = ({ user }: PageHeaderProps) => {
 									<li className="nav-item">
 										<Link className="nav-link" href="/projects">
 											Projects
-										</Link>
-									</li>
-									<li className="nav-item">
-										<Link className="nav-link" href="/contact">
-											Contact
 										</Link>
 									</li>
 								</ul>
