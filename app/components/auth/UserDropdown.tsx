@@ -6,9 +6,13 @@ import Link from "next/link";
 
 interface UserDropdownProps {
 	user: any;
+	textColor?: string;
 }
 
-export default function UserDropdown({ user }: UserDropdownProps) {
+export default function UserDropdown({
+	user,
+	textColor = "text-muted",
+}: UserDropdownProps) {
 	// Re-render when user prop changes
 	useEffect(() => {
 		// User prop changed
@@ -25,7 +29,7 @@ export default function UserDropdown({ user }: UserDropdownProps) {
 	return (
 		<div className="dropdown">
 			<button
-				className="btn btn-link text-decoration-none text-muted p-0 dropdown-toggle"
+				className={`btn btn-link text-decoration-none p-0 dropdown-toggle ${textColor}`}
 				type="button"
 				data-bs-toggle="dropdown"
 				aria-expanded="false"
@@ -33,7 +37,7 @@ export default function UserDropdown({ user }: UserDropdownProps) {
 				Admin
 			</button>
 
-			<ul className="dropdown-menu dropdown-menu-end">
+			<ul className={`dropdown-menu dropdown-menu-end ${textColor}`}>
 				<li>
 					<Link className="dropdown-item" href="/admin/dashboard">
 						<i className="bi bi-speedometer2 me-2"></i>

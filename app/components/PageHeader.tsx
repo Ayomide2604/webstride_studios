@@ -78,10 +78,23 @@ const PageHeader = ({ user }: PageHeaderProps) => {
 
 								{/* Mobile-only theme and user controls */}
 								<div className="d-lg-none mt-4">
-									<div className="d-flex align-items-center justify-content-between">
+									<div className="d-flex align-items-center gap-2 w-100">
+										<Link href="/contact" className="btn btn-light flex-grow-1">
+											Contact Us
+										</Link>
 										<ThemeToggle />
-										{user && <UserDropdown user={user} />}
 									</div>
+									<button
+										className="btn btn-primary w-100 mt-2"
+										onClick={() => setIsQuoteModalOpen(true)}
+									>
+										Get a Quote
+									</button>
+									{user && (
+										<div className="mt-4">
+											<UserDropdown user={user} />
+										</div>
+									)}
 								</div>
 							</div>
 						</div>
