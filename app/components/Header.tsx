@@ -92,8 +92,10 @@ const Header = ({ user }: HeaderProps) => {
 							</div>
 						</div>
 						<div className="ms-3 d-flex align-items-center justify-content-lg-end">
-							<ThemeToggle />
-							<div className="ms-2">
+							<div className="d-none d-lg-block">
+								<ThemeToggle />
+							</div>
+							<div className="ms-2 d-none d-lg-block">
 								<UserDropdown user={user} />
 							</div>
 						</div>
