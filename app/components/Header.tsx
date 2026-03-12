@@ -46,7 +46,7 @@ const Header = ({ user }: HeaderProps) => {
 						>
 							<div className="offcanvas-header">
 								<Link href="/" className="text-inverse">
-									<Image src={logo} alt="Logo" width={150} height={40} />
+									<Image src={logo} alt="Logo" width={200} height={90} />
 								</Link>
 								<button
 									type="button"
