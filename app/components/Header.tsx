@@ -5,7 +5,6 @@ import logoDark from "../../public/assets/images/logo/logo.svg";
 import logo from "../../public/assets/images/logo/logo.svg";
 import ThemeToggle from "./ThemeToggle";
 import QuoteModal from "./QuoteModal";
-import UserDropdown from "./auth/UserDropdown";
 import { useState } from "react";
 
 interface HeaderProps {
@@ -37,11 +36,18 @@ const Header = ({ user }: HeaderProps) => {
 								style={{ display: "none" }}
 							/>
 						</Link>
-						<button className="navbar-toggler offcanvas-nav-btn" type="button">
+						<button
+							className="navbar-toggler offcanvas-nav-btn"
+							type="button"
+							data-bs-toggle="offcanvas"
+							data-bs-target="#offcanvasHeader"
+							aria-controls="offcanvasHeader"
+						>
 							<span className="navbar-toggler-icon"></span>
 						</button>
 						<div
 							className="offcanvas offcanvas-start offcanvas-nav"
+							id="offcanvasHeader"
 							style={{ width: "20rem" }}
 						>
 							<div className="offcanvas-header">
@@ -80,18 +86,21 @@ const Header = ({ user }: HeaderProps) => {
 								</ul>
 
 								<div className="mt-3 mt-lg-0 d-flex align-items-center">
-									<Link href="/contact" className="btn btn-light mx-2">
+									<Link
+										href="/contact"
+										className="btn btn-light mx-2 d-none d-lg-block"
+									>
 										Contact Us
 									</Link>
 									<button
-										className="btn btn-primary"
+										className="btn btn-primary d-none d-lg-block"
 										onClick={() => setIsQuoteModalOpen(true)}
 									>
 										Get a Quote
 									</button>
 								</div>
 
-								{/* Mobile-only theme and user controls */}
+								{/* Mobile-only buttons and controls */}
 								<div className="d-lg-none mt-4">
 									<div className="d-flex align-items-center gap-2 w-100">
 										<Link href="/contact" className="btn btn-light flex-grow-1">
@@ -106,9 +115,7 @@ const Header = ({ user }: HeaderProps) => {
 										Get a Quote
 									</button>
 									{user && (
-										<div className="mt-4">
-											<UserDropdown user={user} />
-										</div>
+										<div className="mt-4">{/* User dropdown removed */}</div>
 									)}
 								</div>
 							</div>
@@ -116,9 +123,6 @@ const Header = ({ user }: HeaderProps) => {
 						<div className="ms-3 d-flex align-items-center justify-content-lg-end">
 							<div className="d-none d-lg-block">
 								<ThemeToggle />
-							</div>
-							<div className="ms-2 d-none d-lg-block">
-								<UserDropdown user={user} textColor="text-white" />
 							</div>
 						</div>
 					</div>

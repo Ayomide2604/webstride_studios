@@ -4,7 +4,6 @@ import Link from "next/link";
 import logo from "../../public/assets/images/logo/logo.svg";
 import ThemeToggle from "./ThemeToggle";
 import QuoteModal from "./QuoteModal";
-import UserDropdown from "./auth/UserDropdown";
 import { useState } from "react";
 
 interface PageHeaderProps {
@@ -22,11 +21,18 @@ const PageHeader = ({ user }: PageHeaderProps) => {
 						<Link className="navbar-brand" href="/">
 							<Image src={logo} alt="Logo" width={200} height={90} />
 						</Link>
-						<button className="navbar-toggler offcanvas-nav-btn" type="button">
+						<button
+							className="navbar-toggler offcanvas-nav-btn"
+							type="button"
+							data-bs-toggle="offcanvas"
+							data-bs-target="#offcanvasPageHeader"
+							aria-controls="offcanvasPageHeader"
+						>
 							<i className="bi bi-list"></i>
 						</button>
 						<div
 							className="offcanvas offcanvas-start offcanvas-nav"
+							id="offcanvasPageHeader"
 							style={{ width: "20rem" }}
 						>
 							<div className="offcanvas-header">
@@ -65,18 +71,21 @@ const PageHeader = ({ user }: PageHeaderProps) => {
 								</ul>
 
 								<div className="mt-3 mt-lg-0 d-flex align-items-center">
-									<Link href="/contact" className="btn btn-light mx-2">
+									<Link
+										href="/contact"
+										className="btn btn-light mx-2 d-none d-lg-block"
+									>
 										Contact Us
 									</Link>
 									<button
-										className="btn btn-primary"
+										className="btn btn-primary d-none d-lg-block"
 										onClick={() => setIsQuoteModalOpen(true)}
 									>
 										Get a Quote
 									</button>
 								</div>
 
-								{/* Mobile-only theme and user controls */}
+								{/* Mobile-only buttons and controls */}
 								<div className="d-lg-none mt-4">
 									<div className="d-flex align-items-center gap-2 w-100">
 										<Link href="/contact" className="btn btn-light flex-grow-1">
@@ -91,9 +100,7 @@ const PageHeader = ({ user }: PageHeaderProps) => {
 										Get a Quote
 									</button>
 									{user && (
-										<div className="mt-4">
-											<UserDropdown user={user} />
-										</div>
+										<div className="mt-4">{/* User dropdown removed */}</div>
 									)}
 								</div>
 							</div>
@@ -101,9 +108,6 @@ const PageHeader = ({ user }: PageHeaderProps) => {
 						<div className="ms-3 d-flex align-items-center justify-content-lg-end">
 							<div className="d-none d-lg-block">
 								<ThemeToggle />
-							</div>
-							<div className="ms-2 d-none d-lg-block">
-								<UserDropdown user={user} />
 							</div>
 						</div>
 					</div>
