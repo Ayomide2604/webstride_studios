@@ -30,63 +30,63 @@ export default function ContactPage() {
 	const [filter, setFilter] = useState<string>("all");
 	const supabase = createClient();
 
-	useEffect(() => {
-		const fetchMessages = async () => {
-			try {
-				let query = supabase
+	const fetchMessages = async () => {
+		try {
+			let query = supabase
+				.from("contact_messages")
+				.select("*")
+				.order("created_at", { ascending: false });
+
+			// Apply filter
+			if (filter === "new") {
+				query = query.eq("status", "new");
+			} else if (filter === "read") {
+				query = query.eq("status", "read");
+			} else if (filter === "replied") {
+				query = query.eq("status", "replied");
+			}
+
+			const { data, error } = await query;
+
+			if (error) {
+				console.error("Error fetching messages:", error);
+			} else {
+				const messageData = data || [];
+				setMessages(messageData);
+
+				// Calculate stats from all messages (not filtered)
+				const { data: allData } = await supabase
 					.from("contact_messages")
 					.select("*")
 					.order("created_at", { ascending: false });
 
-				// Apply filter
-				if (filter === "new") {
-					query = query.eq("status", "new");
-				} else if (filter === "read") {
-					query = query.eq("status", "read");
-				} else if (filter === "replied") {
-					query = query.eq("status", "replied");
-				}
+				const allMessages = allData || [];
+				const total = allMessages.length;
+				const newMessages = allMessages.filter(
+					(m) => m.status === "new",
+				).length;
+				const readMessages = allMessages.filter(
+					(m) => m.status === "read",
+				).length;
+				const repliedMessages = allMessages.filter(
+					(m) => m.status === "replied",
+				).length;
 
-				const { data, error } = await query;
-
-				if (error) {
-					console.error("Error fetching messages:", error);
-				} else {
-					const messageData = data || [];
-					setMessages(messageData);
-
-					// Calculate stats from all messages (not filtered)
-					const { data: allData } = await supabase
-						.from("contact_messages")
-						.select("*")
-						.order("created_at", { ascending: false });
-
-					const allMessages = allData || [];
-					const total = allMessages.length;
-					const newMessages = allMessages.filter(
-						(m) => m.status === "new",
-					).length;
-					const readMessages = allMessages.filter(
-						(m) => m.status === "read",
-					).length;
-					const repliedMessages = allMessages.filter(
-						(m) => m.status === "replied",
-					).length;
-
-					setStats({
-						total,
-						new: newMessages,
-						read: readMessages,
-						replied: repliedMessages,
-					});
-				}
-			} catch (error) {
-				console.error("Error:", error);
-			} finally {
-				setLoading(false);
+				setStats({
+					total,
+					new: newMessages,
+					read: readMessages,
+					replied: repliedMessages,
+				});
 			}
-		};
+		} catch (error) {
+			console.error("Error:", error);
+		} finally {
+			setLoading(false);
+		}
+	};
 
+	useEffect(() => {
 		fetchMessages();
 
 		// Set up real-time subscription
@@ -506,7 +506,7 @@ export default function ContactPage() {
 												<label className="form-label fw-bold">Your Reply</label>
 												<textarea
 													className="form-control"
-													rows="4"
+													rows={4}
 													placeholder="Type your reply here..."
 													value={replyContent}
 													onChange={(e) => setReplyContent(e.target.value)}
