@@ -69,11 +69,6 @@ const PageHeader = ({ user }: PageHeaderProps) => {
 											Portfolio
 										</Link>
 									</li>
-									<li className="nav-item">
-										<Link className="nav-link" href="/projects">
-											Projects
-										</Link>
-									</li>
 								</ul>
 
 								<div className="mt-3 mt-lg-0 d-flex align-items-center">
