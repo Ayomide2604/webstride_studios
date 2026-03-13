@@ -65,6 +65,11 @@ const PageHeader = ({ user }: PageHeaderProps) => {
 										</Link>
 									</li>
 									<li className="nav-item">
+										<Link className="nav-link" href="/portfolio">
+											Portfolio
+										</Link>
+									</li>
+									<li className="nav-item">
 										<Link className="nav-link" href="/projects">
 											Projects
 										</Link>

@@ -80,6 +80,11 @@ const Header = ({ user }: HeaderProps) => {
 										</Link>
 									</li>
 									<li className="nav-item">
+										<Link className="nav-link" href="/portfolio">
+											Portfolio
+										</Link>
+									</li>
+									<li className="nav-item">
 										<Link className="nav-link" href="/projects">
 											Projects
 										</Link>
