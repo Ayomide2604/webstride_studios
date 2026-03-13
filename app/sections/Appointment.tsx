@@ -1,6 +1,102 @@
-import Image from "next/image"; // Optional now — can be removed if not using avatar
+"use client";
+
+import { useState } from "react";
+import { createClient } from "@/lib/supabase/client";
 
 const Appointment = () => {
+	const [formData, setFormData] = useState({
+		firstName: "",
+		lastName: "",
+		email: "",
+		company: "",
+		phone: "",
+		message: "",
+	});
+	const [isSubmitting, setIsSubmitting] = useState(false);
+	const [submitStatus, setSubmitStatus] = useState("");
+	const supabase = createClient();
+
+	const handleChange = (
+		e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+	) => {
+		setFormData({
+			...formData,
+			[e.target.name]: e.target.value,
+		});
+	};
+
+	const handleSubmit = async (e: React.FormEvent) => {
+		e.preventDefault();
+		setIsSubmitting(true);
+		setSubmitStatus("");
+
+		try {
+			const fullName = `${formData.firstName} ${formData.lastName}`;
+
+			// Save to Supabase
+			const { data, error } = await supabase
+				.from("contact_messages")
+				.insert([
+					{
+						name: fullName,
+						email: formData.email,
+						company: formData.company,
+						phone: formData.phone,
+						message: formData.message,
+						status: "new",
+					},
+				])
+				.select();
+
+			if (error) {
+				console.error("Supabase error:", error);
+				throw error;
+			}
+
+			// Try to send email notification (but don't fail if it doesn't work)
+			try {
+				const response = await fetch("/api/contact", {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify({
+						messageData: {
+							name: fullName,
+							email: formData.email,
+							company: formData.company,
+							phone: formData.phone,
+							message: formData.message,
+						},
+					}),
+				});
+
+				if (!response.ok) {
+					const errorData = await response.json();
+					// Don't throw error - message was saved successfully
+				}
+			} catch (emailError) {
+				// Continue even if email fails
+			}
+
+			// Reset form
+			setFormData({
+				firstName: "",
+				lastName: "",
+				email: "",
+				company: "",
+				phone: "",
+				message: "",
+			});
+			setSubmitStatus("success");
+		} catch (error) {
+			console.error("Error submitting form:", error);
+			setSubmitStatus("error");
+		} finally {
+			setIsSubmitting(false);
+		}
+	};
+
 	return (
 		<section className="pattern-square bg-info bg-opacity-10">
 			<div className="container position-relative z-1 py-xl-9 py-6">
@@ -74,16 +170,6 @@ const Appointment = () => {
 											</li>
 										</ul>
 									</div>
-
-									{/* Optional: add your contact info here if you want it visible again */}
-									{/* <div className="small mt-4">
-                    <a
-                      href="mailto:theolowuayo@gmail.com"
-                      className="text-primary text-decoration-none"
-                    >
-                      theolowuayo@gmail.com
-                    </a>
-                  </div> */}
 								</div>
 							</div>
 
@@ -94,7 +180,20 @@ const Appointment = () => {
 							>
 								<div className="card shadow-sm">
 									<div className="card-body">
-										<form className="row needs-validation g-3" noValidate>
+										{submitStatus === "success" && (
+											<div className="alert alert-success mb-4">
+												Thank you for your message! We'll get back to you soon.
+											</div>
+										)}
+										{submitStatus === "error" && (
+											<div className="alert alert-danger mb-4">
+												Something went wrong. Please try again later.
+											</div>
+										)}
+										<form
+											className="row needs-validation g-3"
+											onSubmit={handleSubmit}
+										>
 											<div className="col-lg-12">
 												<div className="mb-4">
 													<h3 className="mb-0">
@@ -103,16 +202,17 @@ const Appointment = () => {
 												</div>
 											</div>
 											<div className="col-md-6 col-12">
-												<label
-													htmlFor="ScheduleFirstnameInput"
-													className="form-label"
-												>
+												<label htmlFor="firstName" className="form-label">
 													First Name <span className="text-danger">*</span>
 												</label>
 												<input
 													type="text"
 													className="form-control"
-													id="ScheduleFirstnameInput"
+													id="firstName"
+													name="firstName"
+													value={formData.firstName}
+													onChange={handleChange}
+													placeholder="Enter first name only"
 													required
 												/>
 												<div className="invalid-feedback">
@@ -120,33 +220,34 @@ const Appointment = () => {
 												</div>
 											</div>
 											<div className="col-md-6 col-12">
-												<label
-													htmlFor="scheduleLastnameInput"
-													className="form-label"
-												>
+												<label htmlFor="lastName" className="form-label">
 													Last Name <span className="text-danger">*</span>
 												</label>
 												<input
 													type="text"
 													className="form-control"
-													id="scheduleLastnameInput"
+													id="lastName"
+													name="lastName"
+													value={formData.lastName}
+													onChange={handleChange}
+													placeholder="Enter last name only"
 													required
 												/>
 												<div className="invalid-feedback">
 													Please enter your last name.
 												</div>
 											</div>
-											<div className="col-md-6 col-12">
-												<label
-													htmlFor="scheduleEmailInput"
-													className="form-label"
-												>
+											<div className="col-md-12">
+												<label htmlFor="email" className="form-label">
 													Email <span className="text-danger">*</span>
 												</label>
 												<input
 													type="email"
 													className="form-control"
-													id="scheduleEmailInput"
+													id="email"
+													name="email"
+													value={formData.email}
+													onChange={handleChange}
 													required
 												/>
 												<div className="invalid-feedback">
@@ -154,36 +255,45 @@ const Appointment = () => {
 												</div>
 											</div>
 											<div className="col-md-6 col-12">
-												<label
-													htmlFor="schedulePhoneInput"
-													className="form-label"
-												>
-													Phone Number <span className="text-danger">*</span>
+												<label htmlFor="company" className="form-label">
+													Company Name (Optional)
+												</label>
+												<input
+													type="text"
+													className="form-control"
+													id="company"
+													name="company"
+													value={formData.company}
+													onChange={handleChange}
+												/>
+											</div>
+											<div className="col-md-6 col-12">
+												<label htmlFor="phone" className="form-label">
+													Phone
 												</label>
 												<input
 													type="tel"
 													className="form-control"
-													id="schedulePhoneInput"
-													required
+													id="phone"
+													name="phone"
+													value={formData.phone}
+													onChange={handleChange}
 												/>
-												<div className="invalid-feedback">
-													Please enter your phone number.
-												</div>
 											</div>
 											<div className="col-md-12">
-												<label
-													htmlFor="scheduleTextarea"
-													className="form-label"
-												>
-													Message / Project Details
+												<label htmlFor="message" className="form-label">
+													Message / Project Details{" "}
+													<span className="text-danger">*</span>
 												</label>
 												<textarea
 													className="form-control"
-													id="scheduleTextarea"
+													id="message"
+													name="message"
 													placeholder="Tell us about your project, timeline, or questions..."
 													rows={4}
+													value={formData.message}
+													onChange={handleChange}
 													required
-													defaultValue={""}
 												/>
 												<div className="invalid-feedback">
 													Please share some details about your project.
@@ -193,8 +303,9 @@ const Appointment = () => {
 												<button
 													className="btn btn-primary btn-lg"
 													type="submit"
+													disabled={isSubmitting}
 												>
-													Send Message
+													{isSubmitting ? "Sending..." : "Send Message"}
 												</button>
 											</div>
 										</form>
