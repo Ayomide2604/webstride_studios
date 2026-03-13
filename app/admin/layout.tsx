@@ -24,6 +24,16 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
 			icon: "bx bx-chat",
 			label: "Testimonials",
 		},
+		{
+			href: "/admin/contact",
+			icon: "bx bx-envelope",
+			label: "Contact Messages",
+		},
+		{
+			href: "/admin/settings",
+			icon: "bx bx-cog",
+			label: "Settings",
+		},
 	];
 
 	return (

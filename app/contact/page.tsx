@@ -1,6 +1,102 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
+import { createClient } from "@/lib/supabase/client";
 
 const page = () => {
+	const [formData, setFormData] = useState({
+		firstName: "",
+		lastName: "",
+		email: "",
+		company: "",
+		phone: "",
+		message: "",
+	});
+	const [isSubmitting, setIsSubmitting] = useState(false);
+	const [submitStatus, setSubmitStatus] = useState("");
+	const supabase = createClient();
+
+	const handleChange = (
+		e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+	) => {
+		setFormData({
+			...formData,
+			[e.target.name]: e.target.value,
+		});
+	};
+
+	const handleSubmit = async (e: React.FormEvent) => {
+		e.preventDefault();
+		setIsSubmitting(true);
+		setSubmitStatus("");
+
+		try {
+			const fullName = `${formData.firstName} ${formData.lastName}`;
+
+			// Save to Supabase
+			const { data, error } = await supabase
+				.from("contact_messages")
+				.insert([
+					{
+						name: fullName,
+						email: formData.email,
+						company: formData.company,
+						phone: formData.phone,
+						message: formData.message,
+						status: "new",
+					},
+				])
+				.select();
+
+			if (error) {
+				console.error("Supabase error:", error);
+				throw error;
+			}
+
+			// Try to send email notification (but don't fail if it doesn't work)
+			try {
+				const response = await fetch("/api/contact", {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify({
+						messageData: {
+							name: fullName,
+							email: formData.email,
+							company: formData.company,
+							phone: formData.phone,
+							message: formData.message,
+						},
+					}),
+				});
+
+				if (!response.ok) {
+					const errorData = await response.json();
+					// Don't throw error - message was saved successfully
+				}
+			} catch (emailError) {
+				// Continue even if email fails
+			}
+
+			// Reset form
+			setFormData({
+				firstName: "",
+				lastName: "",
+				email: "",
+				company: "",
+				phone: "",
+				message: "",
+			});
+			setSubmitStatus("success");
+		} catch (error) {
+			console.error("Error submitting form:", error);
+			setSubmitStatus("error");
+		} finally {
+			setIsSubmitting(false);
+		}
+	};
+
 	return (
 		<>
 			<div className="pattern-square" />
@@ -28,19 +124,34 @@ const page = () => {
 								<div className="col-md-7 col-12">
 									<div className="card shadow-sm">
 										<div className="card-body">
-											<form className="row g-3 needs-validation" noValidate>
+											{submitStatus === "success" && (
+												<div className="alert alert-success mb-4">
+													Thank you for your message! We'll get back to you
+													soon.
+												</div>
+											)}
+											{submitStatus === "error" && (
+												<div className="alert alert-danger mb-4">
+													Something went wrong. Please try again later.
+												</div>
+											)}
+											<form
+												className="row g-3 needs-validation"
+												onSubmit={handleSubmit}
+											>
 												<div className="col-lg-6 col-md-12">
-													<label
-														htmlFor="contactFirstNameInput"
-														className="form-label"
-													>
+													<label htmlFor="firstName" className="form-label">
 														First Name
 														<span className="text-danger">*</span>
 													</label>
 													<input
 														type="text"
 														className="form-control"
-														id="contactFirstNameInput"
+														id="firstName"
+														name="firstName"
+														value={formData.firstName}
+														onChange={handleChange}
+														placeholder="Enter first name only"
 														required
 													/>
 													<div className="invalid-feedback">
@@ -48,17 +159,18 @@ const page = () => {
 													</div>
 												</div>
 												<div className="col-lg-6 col-md-12">
-													<label
-														htmlFor="contactLastNameInput"
-														className="form-label"
-													>
+													<label htmlFor="lastName" className="form-label">
 														Last Name
 														<span className="text-danger">*</span>
 													</label>
 													<input
 														type="text"
 														className="form-control"
-														id="contactLastNameInput"
+														id="lastName"
+														name="lastName"
+														value={formData.lastName}
+														onChange={handleChange}
+														placeholder="Enter last name only"
 														required
 													/>
 													<div className="invalid-feedback">
@@ -66,17 +178,17 @@ const page = () => {
 													</div>
 												</div>
 												<div className="col-md-12">
-													<label
-														htmlFor="contactEmailInput"
-														className="form-label"
-													>
+													<label htmlFor="email" className="form-label">
 														Email
 														<span className="text-danger">*</span>
 													</label>
 													<input
 														type="email"
 														className="form-control"
-														id="contactEmailInput"
+														id="email"
+														name="email"
+														value={formData.email}
+														onChange={handleChange}
 														required
 													/>
 													<div className="invalid-feedback">
@@ -84,61 +196,57 @@ const page = () => {
 													</div>
 												</div>
 												<div className="col-md-12">
-													<label
-														htmlFor="contactCompanyNameInput"
-														className="form-label"
-													>
-														Company Name
+													<label htmlFor="company" className="form-label">
+														Company Name (Optional)
 													</label>
 													<input
 														type="text"
 														className="form-control"
-														id="contactCompanyNameInput"
-														required
+														id="company"
+														name="company"
+														value={formData.company}
+														onChange={handleChange}
 													/>
-													<div className="invalid-feedback">
-														Please enter company name.
-													</div>
 												</div>
 												<div className="col-md-12">
-													<label
-														htmlFor="contactPhoneInput"
-														className="form-label"
-													>
+													<label htmlFor="phone" className="form-label">
 														Phone
 													</label>
 													<input
 														type="tel"
 														className="form-control"
-														id="contactPhoneInput"
-														required
+														id="phone"
+														name="phone"
+														value={formData.phone}
+														onChange={handleChange}
 													/>
-													<div className="invalid-feedback">
-														Please enter phone.
-													</div>
 												</div>
 												<div className="col-md-12">
-													<label
-														htmlFor="contactTextarea"
-														className="form-label"
-													>
+													<label htmlFor="message" className="form-label">
 														Message
+														<span className="text-danger">*</span>
 													</label>
 													<textarea
 														className="form-control"
-														id="contactTextarea"
+														id="message"
+														name="message"
 														placeholder="Write to us"
 														rows={4}
+														value={formData.message}
+														onChange={handleChange}
 														required
-														defaultValue={""}
 													/>
 													<div className="invalid-feedback">
 														Please enter a message.
 													</div>
 												</div>
 												<div className="d-grid">
-													<button className="btn btn-primary" type="submit">
-														Send
+													<button
+														className="btn btn-primary"
+														type="submit"
+														disabled={isSubmitting}
+													>
+														{isSubmitting ? "Sending..." : "Send"}
 													</button>
 												</div>
 											</form>
@@ -181,7 +289,7 @@ const page = () => {
 												viewBox="0 0 16 16"
 											>
 												<path d="M5 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" />
-												<path d="m2.165 15.803.02-.004c1.83-.363 2.948-.842 3.468-1.105A9.06 9.06 0 0 0 8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6a10.437 10.437 0 0 1-.524 2.318l-.003.011a10.722 10.722 0 0 1-.244.637c-.079.186.074.394.273.362a21.673 21.673 0 0 0 .693-.125zm.8-3.108a1 1 0 0 0-.287-.801C1.618 10.83 1 9.468 1 8c0-3.192 3.004-6 7-6s7 2.808 7 6c0 3.193-3.004 6-7 6a8.06 8.06 0 0 1-2.088-.272 1 1 0 0 0-.711.074c-.387.196-1.24.57-2.634.893a10.97 10.97 0 0 0 .398-2z" />
+												<path d="M2 3h10v2H2V3zm0 3h4v3H2V6zm0 4h4v1H2v-1zm0 2h4v1H2v-1zm5-6h2v1H7V6zm3 0h2v1h-2V6zM7 8h2v1H7V8zm3 0h2v1h-2V8zm-3 2h2v1H7v-1zm3 0h2v1h-2v-1zm-3 2h2v1H7v-1zm3 0h2v1h-2v-1z" />
 											</svg>
 										</div>
 										<div>
